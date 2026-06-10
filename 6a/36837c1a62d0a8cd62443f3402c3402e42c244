@@ -1,0 +1,19 @@
+.gitignore
+  s_13f4add93d893a::t_b90859bab4f766 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "6a36837c1a62d0a8cd62443f3402c3402e42c244",
+  "prompts": {},
+  "sessions": {
+    "s_13f4add93d893a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3c85bb77-965c-4ecd-8d41-c64c35d8e73d",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "rosoukef_meli <rodrigo.rsoukef@mercadolivre.com>"
+    }
+  }
+}
