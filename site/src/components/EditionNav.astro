@@ -1,0 +1,66 @@
+---
+interface Props {
+  prevDate?: string | null;
+  nextDate?: string | null;
+}
+const { prevDate, nextDate } = Astro.props;
+---
+<nav class="edition-nav">
+  <div>
+    {prevDate
+      ? <a href={`/edicoes/${prevDate}/`} class="nav-btn">← Semana anterior</a>
+      : <span class="nav-btn nav-btn--disabled">← Semana anterior</span>
+    }
+  </div>
+  <a href="/edicoes/" class="nav-archive">Ver arquivo completo</a>
+  <div>
+    {nextDate
+      ? <a href={`/edicoes/${nextDate}/`} class="nav-btn">Semana seguinte →</a>
+      : <span class="nav-btn nav-btn--disabled">Semana seguinte →</span>
+    }
+  </div>
+</nav>
+
+<style>
+  .edition-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 0;
+    border-top: 1px solid #ebebeb;
+    margin-top: 64px;
+  }
+
+  .nav-btn {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #0a0a0a;
+    padding: 10px 20px;
+    border: 1.5px solid #0a0a0a;
+    transition: background .15s, color .15s;
+    display: inline-block;
+  }
+
+  .nav-btn:hover {
+    background: #0a0a0a;
+    color: #fff;
+  }
+
+  .nav-btn--disabled {
+    border-color: #ddd;
+    color: #ccc;
+    cursor: default;
+  }
+
+  .nav-archive {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #999;
+    font-weight: 500;
+  }
+
+  .nav-archive:hover { color: #0a0a0a; }
+</style>

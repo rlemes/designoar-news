@@ -1,0 +1,227 @@
+---
+import CategoryTag from './CategoryTag.astro';
+
+interface Props {
+  article: {
+    id: string;
+    url: string;
+    source: string;
+    category: string;
+    title_pt: string;
+    summary_pt: string;
+    thumbnail?: string | null;
+    score: number;
+    published_at?: string | null;
+  };
+  featured?: boolean;
+}
+const { article, featured = false } = Astro.props;
+const { url, source, category, title_pt, summary_pt, thumbnail, published_at } = article;
+
+const dateStr = published_at
+  ? new Date(published_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })
+  : null;
+
+const CAT_COLORS: Record<string, string> = {
+  "UX Design":         "#1a6fb5",
+  "Design Digital":    "#5b3faa",
+  "Game Design":       "#c8001e",
+  "Design de Produto": "#0d7045",
+  "Arquitetura":       "#7a4526",
+  "Design Gráfico":    "#c8001e",
+  "Arte & Design":     "#444444",
+};
+const catColor = CAT_COLORS[category] ?? "#444444";
+const sourceInitial = source ? source[0].toUpperCase() : "D";
+---
+
+<article class:list={["card", { "card--featured": featured }]}>
+  <a href={url} target="_blank" rel="noopener noreferrer" class="card__image-wrap">
+    {thumbnail
+      ? <img src={thumbnail} alt={title_pt} loading="lazy" class="card__image" />
+      : (
+        <div class="card__placeholder" style={`--ph-color: ${catColor}`}>
+          <span class="card__placeholder-letter">{sourceInitial}</span>
+        </div>
+      )
+    }
+    <CategoryTag category={category} overlay={true} />
+  </a>
+
+  <div class="card__body">
+    <a href={url} target="_blank" rel="noopener noreferrer">
+      <h2 class="card__title">{title_pt}</h2>
+    </a>
+
+    <p class="card__summary">{summary_pt}</p>
+
+    <div class="card__meta">
+      <span class="card__source">{source}</span>
+      {dateStr && <span class="card__date">{dateStr}</span>}
+      <a href={url} target="_blank" rel="noopener noreferrer" class="card__link">
+        Ler original →
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid #0a0a0a;
+    background: #fff;
+    transition: border-color .2s;
+  }
+
+  .card:hover {
+    border-color: #c8001e;
+  }
+
+  /* Featured card — spans full row, horizontal layout */
+  .card--featured {
+    flex-direction: row;
+    grid-column: 1 / -1;
+    border-top-width: 3px;
+  }
+
+  .card--featured .card__image-wrap {
+    flex: 0 0 55%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .card--featured .card__body {
+    padding: 32px 36px;
+    justify-content: center;
+  }
+
+  .card--featured .card__title {
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.2;
+  }
+
+  .card--featured .card__summary {
+    -webkit-line-clamp: 5;
+    font-size: 15px;
+  }
+
+  /* Image */
+  .card__image-wrap {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+
+  .card:hover .card__image {
+    transform: scale(1.03);
+  }
+
+  /* Placeholder quando não há thumbnail */
+  .card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, var(--ph-color) 8%, #f7f7f7);
+    border-bottom: 3px solid var(--ph-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card__placeholder-letter {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(36px, 6vw, 64px);
+    color: var(--ph-color);
+    opacity: 0.25;
+    font-weight: 400;
+    line-height: 1;
+    user-select: none;
+  }
+
+  /* Body */
+  .card__body {
+    padding: 20px 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .card__title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #0a0a0a;
+    margin-top: 8px;
+    transition: color .15s;
+  }
+
+  .card:hover .card__title {
+    color: #c8001e;
+  }
+
+  .card__summary {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  /* Meta */
+  .card__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .card__source {
+    font-weight: 600;
+    color: #0a0a0a;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+  }
+
+  .card__date {
+    color: #999;
+  }
+
+  .card__link {
+    margin-left: auto;
+    color: #c8001e;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    white-space: nowrap;
+  }
+
+  .card__link:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .card--featured {
+      flex-direction: column;
+    }
+    .card--featured .card__image-wrap {
+      flex: none;
+      width: 100%;
+    }
+    .card--featured .card__body {
+      padding: 20px 0 24px;
+    }
+  }
+</style>

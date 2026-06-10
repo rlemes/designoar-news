@@ -1,0 +1,46 @@
+---
+interface Props {
+  category: string;
+  overlay?: boolean;
+}
+const { category, overlay = false } = Astro.props;
+
+const COLORS: Record<string, string> = {
+  "UX Design":         "#1a6fb5",
+  "Design Digital":    "#5b3faa",
+  "Game Design":       "#c8001e",
+  "Design de Produto": "#0d7045",
+  "Arquitetura":       "#7a4526",
+  "Design Gráfico":    "#c8001e",
+  "Arte & Design":     "#444",
+};
+const color = COLORS[category] ?? "#444";
+---
+<span
+  class:list={["cat-tag", { "cat-tag--overlay": overlay }]}
+  style={`--cat-color: ${color}`}
+>
+  {category}
+</span>
+
+<style>
+  .cat-tag {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--cat-color);
+    border: 1px solid var(--cat-color);
+    padding: 3px 7px;
+    line-height: 1;
+  }
+
+  .cat-tag--overlay {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: white;
+  }
+</style>

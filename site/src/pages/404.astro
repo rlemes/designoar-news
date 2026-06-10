@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Página não encontrada" description="Esta página não existe no Designoar News.">
+  <div class="not-found">
+    <span class="not-found__code">404</span>
+    <h1 class="not-found__title">Página não encontrada</h1>
+    <p class="not-found__sub">O link que você seguiu não existe ou foi movido.</p>
+    <div class="not-found__actions">
+      <a href="/" class="btn-primary">← Edição atual</a>
+      <a href="/edicoes/" class="btn-secondary">Ver arquivo</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px;
+    gap: 16px;
+  }
+
+  .not-found__code {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(80px, 15vw, 140px);
+    font-weight: 400;
+    color: #ebebeb;
+    line-height: 1;
+    letter-spacing: -4px;
+  }
+
+  .not-found__title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 400;
+    color: #0a0a0a;
+    letter-spacing: -0.5px;
+  }
+
+  .not-found__sub {
+    font-size: 15px;
+    color: #999;
+    max-width: 360px;
+  }
+
+  .not-found__actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 24px;
+    background: #0a0a0a;
+    color: #fff;
+    transition: background .15s;
+  }
+
+  .btn-primary:hover { background: #c8001e; }
+
+  .btn-secondary {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 24px;
+    border: 1.5px solid #0a0a0a;
+    color: #0a0a0a;
+    transition: background .15s, color .15s;
+  }
+
+  .btn-secondary:hover { background: #0a0a0a; color: #fff; }
+</style>

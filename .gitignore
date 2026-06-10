@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+site/node_modules/
+site/dist/
+site/.astro/
+*.egg-info/
+.claude/

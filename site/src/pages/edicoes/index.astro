@@ -1,0 +1,149 @@
+---
+import Base from '../../layouts/Base.astro';
+import editionsIndex from '../../data/editions_index.json';
+
+const editions = [...editionsIndex].sort((a, b) => a.date > b.date ? -1 : 1);
+---
+<Base title="Arquivo" description="Todas as edições do Designoar News.">
+
+  <div class="page-header">
+    <div class="page-header__inner">
+      <h1 class="page-title">Arquivo</h1>
+      <p class="page-sub">{editions.length} edições publicadas</p>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+    {editions.length === 0 && (
+      <p class="empty">Nenhuma edição publicada ainda.</p>
+    )}
+
+    <div class="edition-list">
+      {editions.map((e, i) => {
+        const dateFormatted = new Date(e.date + 'T12:00:00Z').toLocaleDateString('pt-BR', {
+          day: '2-digit', month: 'long', year: 'numeric'
+        });
+        const isFirst = i === 0;
+        return (
+          <a href={`/edicoes/${e.date}/`} class:list={["edition-row", { "edition-row--latest": isFirst }]}>
+            <div class="edition-row__left">
+              <span class="edition-num">#{e.edition_number}</span>
+              {isFirst && <span class="latest-badge">Mais recente</span>}
+            </div>
+            <div class="edition-row__center">
+              <span class="edition-date">{dateFormatted}</span>
+            </div>
+            <div class="edition-row__right">
+              <span class="edition-count">{e.count} artigos</span>
+              <span class="edition-arrow">→</span>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-header {
+    border-bottom: 1px solid #ebebeb;
+    padding: 56px 40px 40px;
+  }
+
+  .page-header__inner { max-width: 800px; }
+
+  .page-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+
+  .page-sub {
+    font-size: 14px;
+    color: #999;
+  }
+
+  .content-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px 64px;
+  }
+
+  .edition-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .edition-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 20px 0;
+    border-bottom: 1px solid #ebebeb;
+    color: #0a0a0a;
+    transition: background .12s;
+  }
+
+  .edition-row:hover { background: #f7f7f7; padding-left: 8px; }
+  .edition-row--latest { border-top: 2px solid #c8001e; }
+
+  .edition-row__left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 0 0 120px;
+  }
+
+  .edition-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .latest-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: #c8001e;
+    padding: 2px 7px;
+  }
+
+  .edition-row__center {
+    flex: 1;
+    font-size: 15px;
+    color: #555;
+  }
+
+  .edition-row__right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    color: #999;
+  }
+
+  .edition-arrow {
+    font-size: 16px;
+    color: #0a0a0a;
+    transition: transform .15s;
+  }
+
+  .edition-row:hover .edition-arrow { transform: translateX(4px); }
+
+  .empty {
+    padding: 64px 0;
+    color: #999;
+    font-size: 15px;
+  }
+
+  @media (max-width: 640px) {
+    .page-header { padding: 36px 20px 28px; }
+    .content-wrap { padding: 0 20px 40px; }
+    .edition-row__left { flex: 0 0 80px; }
+    .edition-count { display: none; }
+  }
+</style>
