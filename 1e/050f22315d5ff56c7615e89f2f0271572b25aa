@@ -1,0 +1,19 @@
+site/.npmrc
+  s_13f4add93d893a::t_c709211908757d 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "1e050f22315d5ff56c7615e89f2f0271572b25aa",
+  "prompts": {},
+  "sessions": {
+    "s_13f4add93d893a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3c85bb77-965c-4ecd-8d41-c64c35d8e73d",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "rosoukef_meli <rodrigo.rsoukef@mercadolivre.com>"
+    }
+  }
+}
